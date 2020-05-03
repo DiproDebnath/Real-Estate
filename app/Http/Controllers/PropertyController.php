@@ -18,7 +18,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-       $properties= Property::with(['statuses', 'additional_detail', 'property_images'])->get();
+       $properties= Property::with(['statuses', 'additional_detail', 'property_images'])->paginate(10);
+
        return view('frontend.property.properties', compact('properties'));
     }
 
@@ -55,8 +56,9 @@ class PropertyController extends Controller
             "area"  =>$request->area,
             "property_cate_id" => $request->property_cate_id,
         ]);
+        //pivot table
+        $property->statuses()->sync($request->status);
 
-        StatusController::addStatus($property, $request->status);
         $property->additional_detail()->create([
             "bedrooms"  => $request->bedrooms,
             "bathrooms" => $request->bathrooms,
@@ -66,9 +68,6 @@ class PropertyController extends Controller
         ]);
         if ( $request->feature_name[0] !== null ){
             AdditionalFeatureController::addFeature( $property, $request);
-        }
-        if ($request->plan_name[0] !== null){
-            FloorPlanController::addFloorplans($property,$request);
         }
         if($request->hasFile('g_images')) {
             $allowedfileExtension = ['jpg', 'png', 'jpeg' ];
@@ -88,6 +87,7 @@ class PropertyController extends Controller
                 }
             }
         }
+        return view('frontend.property.property-confirmation', compact('property'));
     }
 
     /**
@@ -96,9 +96,13 @@ class PropertyController extends Controller
      * @param  \App\property  $property
      * @return \Illuminate\Http\Response
      */
-    public function show(property $property)
+    public function show($id)
     {
-        //
+        $property = Property::with([
+            'statuses', 'additional_detail',
+            'additional_features', 'property_images'
+        ])->findOrFail($id);
+        return view('frontend.property.singleProperty', compact('property'));
     }
 
     /**
@@ -107,9 +111,23 @@ class PropertyController extends Controller
      * @param  \App\property  $property
      * @return \Illuminate\Http\Response
      */
-    public function edit(property $property)
+    public function edit($id)
     {
-        //
+        $status = Status::all();
+        $property_cat = PropertyCategory::all();
+        $property = Property::with([
+                'statuses', 'additional_detail',
+                'additional_features',  'property_images'
+            ])
+            ->findOrFail($id);
+        $details = $property->additional_detail;
+        $features = $property->additional_features;
+        $g_images = $property->property_images;
+        $property_stats =$property->statuses;
+        return view('frontend.property.submit-property', compact([
+            'property', 'details', 'features',
+            'status', "property_cat", 'g_images', 'property_stats'
+        ]));
     }
 
     /**
@@ -121,7 +139,55 @@ class PropertyController extends Controller
      */
     public function update(Request $request, property $property)
     {
-        //
+
+        $this->validation($request);
+
+        $property ->update([
+            "title" => $request->title,
+            "user_id" => 1,
+            "description"   => $request->description,
+            "price" =>$request->price,
+            "city"  =>$request->city,
+            "zip_code"  =>$request->zip_code,
+            "street"    =>$request->street,
+            "area"  =>$request->area,
+            "property_cate_id" => $request->property_cate_id,
+        ]);
+        $property->additional_detail()->update([
+            "bedrooms"  => $request->bedrooms,
+            "bathrooms" => $request->bathrooms,
+            "garages"    => $request->garages,
+            "area"    => $request->area_ft,
+            "year_built"    => $request->year_built,
+        ]);
+
+         $property->statuses()->sync($request->status);
+
+        if ( $request->feature_name[0] !== null ){
+            AdditionalFeatureController::updateFeature( $property, $request);
+        }
+        if($request->hasFile('g_images')) {
+            $allowedfileExtension = ['jpg', 'png', 'jpeg' ];
+            $files = $request->file('g_images');
+
+            foreach ($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check = in_array($extension, $allowedfileExtension);
+                if ($check) {
+                    $path = public_path() . '/property/gellary/';
+                    $file->move($path, $filename);
+                    //adding  gellary Image to Image gellary table
+                    $property->property_images()->Create([
+                            "image" => $filename,
+                            "image_type" => 'gellary'
+                        ]);
+
+                }
+            }
+        }
+        return redirect(route('properties.show', $property->id));
+
     }
 
     /**
@@ -151,7 +217,7 @@ class PropertyController extends Controller
             "garages"    => "required|integer",
             "area_ft"    => "required|integer",
             "year_built"    => "required|integer",
-            'g_images'  => "required",
+
             'status'  => "required",
 
         ]);

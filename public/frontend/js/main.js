@@ -315,7 +315,7 @@ jQuery(document).ready(function ($) {
 
     if (submitPropertySelectFields[0]){
         submitPropertySelectFields[0].listen('MDCSelect:change', () => {
-            document.getElementById('property_cat').value = submitPropertySelectFields[0].value;
+            document.getElementById('property_cate_id').value = submitPropertySelectFields[0].value;
         });
     }
 
@@ -419,8 +419,8 @@ jQuery(document).ready(function ($) {
 
         $(".add-step").on("click", function (event) {
 
-            stepcount = document.querySelectorAll('.steps .gellary_images');
-            if (stepcount.length <= 6 ) {
+            stepcount = document.querySelectorAll('.gellary_images');
+            if (stepcount.length <= 7 ) {
             var template = $(this).attr('data-template-name');
             var dynamic_steps = $(this).closest(".dynamic-steps");
             var steps = dynamic_steps.find('.steps')[0];
@@ -431,6 +431,9 @@ jQuery(document).ready(function ($) {
 
             i = isNaN(i) ? 1 : i;
             $($("<span class='num'> " + i + " </span>")).appendTo($(".number")).closest("div").removeClass('number');
+                var data =$('input.file_number');
+
+            $('input.file_number').val(i).removeClass('file_number');
             [].map.call(document.querySelectorAll('.submit-property .mdc-text-field'), function (el) {
                 mdc.textField.MDCTextField.attachTo(el);
             });
@@ -644,3 +647,22 @@ if (typeof Dropzone !== "undefined") {
 }
 
 
+function deleteImage(link, id){
+
+     axios.delete(link, {id})
+         .then(function (response) {
+             $("#" +id).closest('.g_image').remove()
+         }).catch(function (error){
+            console.log(error);
+         })
+
+}function deleteFeature(link, id){
+
+     axios.delete(link, {id})
+         .then(function (response) {
+           //  $("#" +id).closest('.step-section').remove()
+         }).catch(function (error){
+            console.log(error);
+         })
+
+}

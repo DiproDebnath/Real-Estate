@@ -19,10 +19,6 @@ protected $guarded = [];
     {
         return $this->belongsToMany(Status::class);
     }
-    public function floorplans()
-    {
-        return $this->hasMany(FloorPlan::class);
-    }
     public function additional_detail()
     {
         return $this->hasOne(AdditionalDetail::class);

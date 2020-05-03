@@ -99,6 +99,7 @@
                                 </div>
                             </div>
                             @endforeach
+                            {{$properties->links('partials.frontend.paginator')}}
                         </div>
                     </div>
                 </div>

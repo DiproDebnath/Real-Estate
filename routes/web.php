@@ -27,6 +27,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/property-category', "PropertyCategoryController" )->except(['create', 'show' ]);
 Route::resource('/status', "StatusController" )->except(['create', 'show' ]);
 Route::resource('/properties', "PropertyController");
+Route::delete('/property-image/{id}', 'PropertyImageController@destroy')->name('property-image');
+Route::delete('/features/{id}', 'AdditionalFeatureController@destroy')->name('features');
+
+
+
+
+
+
+
 
 
 Route::get('/table', function () {

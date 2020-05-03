@@ -8,12 +8,6 @@ use Illuminate\Http\Request;
 class StatusController extends Controller
 {
 
-    static function addStatus($property, $statuses){
-        foreach ($statuses as $status){
-           $stats =  Status::where('id', $status)->firstorfail();
-            $property->statuses()->attach($stats);
-        }
-    }
 
     public function index()
     {

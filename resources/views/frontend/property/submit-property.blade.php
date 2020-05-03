@@ -52,33 +52,56 @@
                                                 <span class="mdc-tab__ripple"></span>
                                             </button>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <form enctype="multipart/form-data" action="{{route('properties.store')}}" method="post" id="sp-basic-form" class="row">
-                                @csrf
-                                <div class="tab-content tab-content--active">
+                        </div>
+                        <form enctype="multipart/form-data"
+                              action="@if(isset($property)) {{route('properties.update',$property->id )}}@else{{route('properties.store')}} @endif"
+                              method="post" id="sp-basic-form" class="row">
+                            @csrf
+                            @if(isset($property)) @method('patch') @endif
+
+                            <div class="tab-content tab-content--active">
+                                @if(isset($property))
+                                    @include('partials.frontend.form.PropertyFormTab1', ['status', "property_cat", 'property', 'property_stats'] )
+                                @else
                                     @include('partials.frontend.form.PropertyFormTab1', ['status', "property_cat"])
-                                </div>
-                                <div class="tab-content">
-                                    @include('partials.frontend.form.PropertyFormTab2')
-                                </div>
-                                <div class="tab-content">
-                                    @include('partials.frontend.form.PropertyFormTab3')
-                                </div>
-                                <div class="tab-content">
-                                    @include('partials.frontend.form.PropertyFormTab4')
-                                </div>
-                            </form>
+                                @endif
+                            </div>
                             <div class="tab-content">
+                                @if(isset($property))
+                                    @include('partials.frontend.form.PropertyFormTab2', ['property'])
+                                @else
+                                    @include('partials.frontend.form.PropertyFormTab2')
+                                @endif
 
                             </div>
+                            <div class="tab-content">
+                                @if(isset($property))
+                                    @include('partials.frontend.form.PropertyFormTab3', ['g_images' ])
+                                @else
+                                    @include('partials.frontend.form.PropertyFormTab3')
+                                @endif
 
+                            </div>
+                            <div class="tab-content">
+                                @if(isset($property))
+                                    @include('partials.frontend.form.PropertyFormTab4', ['details' ,'features'])
+                                @else
+                                    @include('partials.frontend.form.PropertyFormTab4')
+                                @endif
 
-                        </div>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
+        </div>
     </main>
+@endsection
+
+@section('javascripts')
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 @endsection

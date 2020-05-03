@@ -21,77 +21,31 @@ class AdditionalFeatureController extends Controller
                 "value" => $request->feature_value[$i]
             ]);
         }
-        return 'done';
+
+    }
+    static function updateFeature($property, $request)
+    {
+        $request->validate([
+            "feature_name.*" =>"string|max:255",
+            "feature_value.*" =>"required|string|max:255",
+
+        ]);
+        $feature_length = count($request->feature_name);
+        for ($i = 0 ; $i<$feature_length ; $i++ ){
+            $property->additional_features()->updateOrCreate(
+                 ["id" => $request->feature_id[$i]],
+                ['name' => $request->feature_name[$i],
+                "value" => $request->feature_value[$i]
+            ]);
+        }
     }
 
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Property\AdditionalFeature  $additionalFeature
-     * @return \Illuminate\Http\Response
-     */
-    public function show(AdditionalFeature $additionalFeature)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Property\AdditionalFeature  $additionalFeature
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(AdditionalFeature $additionalFeature)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Property\AdditionalFeature  $additionalFeature
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, AdditionalFeature $additionalFeature)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Property\AdditionalFeature  $additionalFeature
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(AdditionalFeature $additionalFeature)
-    {
-        //
+        $feature = AdditionalFeature::findorfail($id);
+        $feature->delete();
+        return  response()->json($feature, 200);
     }
 }
