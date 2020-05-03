@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Property;
 
+use App\Http\Controllers\Controller;
 use App\Property\PropertyImageGellary;
 use Illuminate\Http\Request;
 
@@ -79,8 +80,8 @@ class PropertyImageController extends Controller
      */
     public function destroy($id)
     {
-       $image = PropertyImageGellary::findorfail($id);
-       $image->delete();
-       return  response()->json($image, 200);
+        $image = PropertyImageGellary::findorfail($id);
+        $image->delete();
+        return  response()->json($image, 200);
     }
 }

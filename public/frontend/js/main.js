@@ -313,6 +313,11 @@ jQuery(document).ready(function ($) {
         return mdc.select.MDCSelect.attachTo(el);
     });
 
+    if (customSelectFields[0]){
+        customSelectFields[0].listen('MDCSelect:change', () => {
+            document.getElementById('user_type').value = customSelectFields[0].value;
+        });
+    }
     if (submitPropertySelectFields[0]){
         submitPropertySelectFields[0].listen('MDCSelect:change', () => {
             document.getElementById('property_cate_id').value = submitPropertySelectFields[0].value;

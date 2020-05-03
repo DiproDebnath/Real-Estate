@@ -1,7 +1,6 @@
 <?php
 
-use App\Property\Property;
-use App\User;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,10 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        factory(User::class, 2)->create()->each(function ($user) {
-            $user->properties()->createMany(factory(Property::class, 100)->make()->toArray());
-        });
-
+      $this->call(RoleSeeder::class);
+      $this->call(UserSeeder::class);
+      $this->call(PropertyCatSeeder::class);
+      $this->call(StatusSeeder::class);
     }
 }

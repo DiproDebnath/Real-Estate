@@ -7,7 +7,7 @@
             <div class="theme-container">
                 <div class="page-drawer-container mt-3">
 
-                    <div class="mdc-drawer-scrim page-sidenav-scrim"></div>
+
                     <div class="page-sidenav-content">
                         <div class="properties-wrapper row mt-0">
                             <div class="row px-2 w-100">

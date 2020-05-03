@@ -31,4 +31,8 @@ protected $guarded = [];
     {
         return $this->hasMany(PropertyImageGellary::class);
     }
+    public function property_cat()
+    {
+        return $this->hasOne(PropertyCategory::class, 'id', 'property_cate_id');
+    }
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Property;
 
-
-
-use \App\Property\Property;
+use App\Http\Controllers\Controller;
+use App\Property\Property;
 use App\Property\PropertyCategory;
 use App\Property\Status;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PropertyController extends Controller
 {
@@ -18,9 +19,9 @@ class PropertyController extends Controller
      */
     public function index()
     {
-       $properties= Property::with(['statuses', 'additional_detail', 'property_images'])->paginate(10);
+        $properties= Property::with(['statuses', 'additional_detail', 'property_images'])->paginate(10);
 
-       return view('frontend.property.properties', compact('properties'));
+        return view('frontend.property.properties', compact('properties'));
     }
 
     /**
@@ -30,6 +31,11 @@ class PropertyController extends Controller
      */
     public function create()
     {
+
+        if(Gate::denies('AdminOrAgent')){
+            return redirect('/');
+        }
+
         $status = Status::all();
         $property_cat = PropertyCategory::all();
         return view('frontend.property.submit-property', compact(['status', "property_cat"]));
@@ -44,10 +50,10 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $this->validation($request);
-
+        $user = auth()->user();
         $property =  Property::create([
             "title" => $request->title,
-            "user_id" => 1,
+            "user_id" => $user->id,
             "description"   => $request->description,
             "price" =>$request->price,
             "city"  =>$request->city,
@@ -99,10 +105,11 @@ class PropertyController extends Controller
     public function show($id)
     {
         $property = Property::with([
-            'statuses', 'additional_detail',
+            'statuses', 'additional_detail', 'property_cat',
             'additional_features', 'property_images'
         ])->findOrFail($id);
-        return view('frontend.property.singleProperty', compact('property'));
+        $agent = User::findorfail($property->user_id);
+        return view('frontend.property.singleProperty', compact(['property', 'agent']));
     }
 
     /**
@@ -113,12 +120,17 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
+
+        if(Gate::denies('AdminOrAgent')){
+            return redirect('/');
+        }
+
         $status = Status::all();
         $property_cat = PropertyCategory::all();
         $property = Property::with([
-                'statuses', 'additional_detail',
-                'additional_features',  'property_images'
-            ])
+            'statuses', 'additional_detail',
+            'additional_features',  'property_images'
+        ])
             ->findOrFail($id);
         $details = $property->additional_detail;
         $features = $property->additional_features;
@@ -141,10 +153,10 @@ class PropertyController extends Controller
     {
 
         $this->validation($request);
-
+        $user = auth()->user();
         $property ->update([
             "title" => $request->title,
-            "user_id" => 1,
+            "user_id" => $user->id,
             "description"   => $request->description,
             "price" =>$request->price,
             "city"  =>$request->city,
@@ -161,7 +173,7 @@ class PropertyController extends Controller
             "year_built"    => $request->year_built,
         ]);
 
-         $property->statuses()->sync($request->status);
+        $property->statuses()->sync($request->status);
 
         if ( $request->feature_name[0] !== null ){
             AdditionalFeatureController::updateFeature( $property, $request);
@@ -179,9 +191,9 @@ class PropertyController extends Controller
                     $file->move($path, $filename);
                     //adding  gellary Image to Image gellary table
                     $property->property_images()->Create([
-                            "image" => $filename,
-                            "image_type" => 'gellary'
-                        ]);
+                        "image" => $filename,
+                        "image_type" => 'gellary'
+                    ]);
 
                 }
             }
@@ -203,7 +215,7 @@ class PropertyController extends Controller
 
 
     private function validation($data){
-       return $data->validate([
+        return $data->validate([
             "title" => "required|string|max:255",
             "description"   => "required|string",
             "price" => "required|integer",

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Property;
 
+use App\Http\Controllers\Controller;
 use App\Property\AdditionalFeature;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class AdditionalFeatureController extends Controller
             "feature_value.*" =>"required|string|max:255",
 
         ]);
-         $feature_length = count($request->feature_name);
+        $feature_length = count($request->feature_name);
         for ($i = 0 ; $i<$feature_length ; $i++ ){
             $property->additional_features()->create([
                 'name' => $request->feature_name[$i],
@@ -33,10 +34,10 @@ class AdditionalFeatureController extends Controller
         $feature_length = count($request->feature_name);
         for ($i = 0 ; $i<$feature_length ; $i++ ){
             $property->additional_features()->updateOrCreate(
-                 ["id" => $request->feature_id[$i]],
+                ["id" => $request->feature_id[$i]],
                 ['name' => $request->feature_name[$i],
-                "value" => $request->feature_value[$i]
-            ]);
+                    "value" => $request->feature_value[$i]
+                ]);
         }
     }
 

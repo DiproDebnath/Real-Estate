@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Property;
 
+use App\Http\Controllers\Controller;
 use App\Property\Status;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
 {
-
 
     public function index()
     {

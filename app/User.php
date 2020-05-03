@@ -46,4 +46,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Property::class);
     }
+    public function image()
+    {
+        return $this->hasOne(Image::class, 'owner_id', 'id');
+    }
+    public function hasAnyRoles($roles){
+        if($this->Roles()->whereIn('name', $roles)->first()){
+            return true;
+        }
+        return false;
+    }
+    public function hasRole($role){
+        if($this->Roles()->where('name', $role)->first()){
+            return true;
+        }
+        return false;
+    }
 }

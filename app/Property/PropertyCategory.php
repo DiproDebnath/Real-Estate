@@ -8,4 +8,9 @@ class PropertyCategory extends Model
 {
 
     protected $fillable = [ 'category'];
+
+    public function property()
+    {
+        return $this->belongsTo(Property::class, 'id', 'property_cate_id');
+    }
 }

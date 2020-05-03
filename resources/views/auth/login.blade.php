@@ -1,73 +1,65 @@
-@extends('layouts.app')
+@extends("layouts.frontend")
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+@section('mainContent')
+    <main>
+        <div class="px-3">
+            <div class="theme-container">
+                <div class="row center-xs middle-xs my-5">
+                    <div class="mdc-card p-3 p-relative mw-500px">
+                        <div class="column center-xs middle-xs text-center">
+                            <h1 class="uppercase">Sign In</h1>
+                            <a href="{{route('register')}}" class="mdc-button mdc-ripple-surface mdc-ripple-surface--accent accent-color normal w-100">
+                                Don't have an account? Sign up now!
+                            </a>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon w-100 mt-3 custom-field @error('email') mdc-text-field--invalid @enderror">
+                                <i class="material-icons mdc-text-field__icon text-muted">person</i>
+                                <input class="mdc-text-field__input" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch">
+                                        <label class="mdc-floating-label">Username</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon mdc-text-field--with-trailing-icon w-100 custom-field mt-4 custom-field @error('password') mdc-text-field--invalid @enderror">
+                                <i class="material-icons mdc-text-field__icon text-muted">lock</i>
+                                <i class="material-icons mdc-text-field__icon text-muted" tabindex="1" id="password-toggle">visibility_off</i>
+                                <input id="password" type="password" class="mdc-text-field__input" name="password" required autocomplete="current-password">
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch">
+                                        <label class="mdc-floating-label">Password</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="mdc-form-field mt-3 w-100">
+                                <div class="mdc-checkbox">
+                                    <input class="mdc-checkbox__native-control" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <div class="mdc-checkbox__background">
+                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                                        </svg>
+                                        <div class="mdc-checkbox__mixedmark"></div>
+                                    </div>
+                                    <div class="mdc-checkbox__ripple"></div>
+                                </div>
+                                <label for="keep" class="text-muted fw-500">Keep me signed in</label>
+                            </div>
+                            <div class="text-center mt-2">
+                                <button class="mdc-button mdc-button--raised bg-accent" type="submit">
+                                    <span class="mdc-button__ripple"></span>
+                                    <span class="mdc-button__label">Sign to My Account</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </main>
 @endsection
