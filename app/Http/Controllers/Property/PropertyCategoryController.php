@@ -17,7 +17,7 @@ class PropertyCategoryController extends Controller
     {
         $categories = PropertyCategory::all();
 
-        return view('backend.property_cat', compact('categories'));
+        return view('backend.admin.property_cat', compact('categories'));
     }
 
 
@@ -47,7 +47,7 @@ class PropertyCategoryController extends Controller
     public function edit(PropertyCategory $propertyCategory)
     {
         $category = $propertyCategory;
-        return view('backend.edit_property_cat', compact('category'));
+        return view('backend.admin.edit_property_cat', compact('category'));
     }
 
     /**

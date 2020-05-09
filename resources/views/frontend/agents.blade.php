@@ -3,7 +3,7 @@
 @section('mainContent')
     <main class="content-offset-to-top">
         <div class="header-image-wrapper">
-            <div class="bg" style="background-image: url('assets/images/others/contact.html');"></div>
+            <div class="bg" style="background-image: url('{{asset('frontend/assets/images/others/about.jpg')}}');"></div>
             <div class="mask"></div>
             <div class="header-image-content">
                 <h1 class="title">Our Agents</h1>
@@ -16,9 +16,15 @@
                     @foreach($agents as $agent)
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 p-3">
                             <div class="mdc-card o-hidden">
-                                <a href="agent.blade.php">
-                                    <img src="assets/images/agents/a-1.jpg" class="d-block mw-100">
+                                @if($agent->image)
+                                <a href="{{route('public_single_agent', $agent->id)}}">
+                                    <img src="{{asset('profile/')}}/{{$agent->image}}" class="d-block mw-100">
                                 </a>
+                                @else
+                                    <a href="{{route('public_single_agent', $agent->id)}}">
+                                    <img src="{{asset('frontend/assets/images/others/user.jpg')}}" class="d-block mw-100">
+                                </a>
+                                @endif
                                 <div class="p-3">
                                     <h2 class="fw-600">{{$agent->name}}</h2>
 

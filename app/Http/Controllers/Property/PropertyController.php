@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Gate;
 
 class PropertyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $properties= Property::with(['statuses', 'additional_detail', 'property_images'])->paginate(10);
@@ -202,15 +198,11 @@ class PropertyController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\property  $property
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(property $property)
     {
-        //
+        $property->delete();
+        return back();
     }
 
 

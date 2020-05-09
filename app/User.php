@@ -3,13 +3,14 @@
 namespace App;
 
 use App\Property\Property;
+use Cmgmyr\Messenger\Traits\Messagable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Messagable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'bio', 'image'
     ];
 
     /**
@@ -45,10 +46,6 @@ class User extends Authenticatable
     public function properties()
     {
         return $this->hasMany(Property::class);
-    }
-    public function image()
-    {
-        return $this->hasOne(Image::class, 'owner_id', 'id');
     }
     public function hasAnyRoles($roles){
         if($this->Roles()->whereIn('name', $roles)->first()){

@@ -126,9 +126,16 @@
                                         <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical"
                                             tabindex="-1">
                                             <li class="user-info row start-xs middle-xs">
-                                                <img src="{{asset('frontend/assets/images/others/user.jpg')}}"
-                                                     alt="user-image" width="50">
-                                                <p class="m-0"> {{auth()->user()->name}} </p>
+                                                <a href="@can('isAdmin'){{ route('admin_dashboard')}}
+                                                @elsecan('isAgent'){{ route('agent_dashboard')}}@else{{route('user_dashboard')}} @endcan"
+
+                                                   class="mdc-list-item" role="menuitem">
+                                                    @if(auth()->user()->image)
+                                                    <img src="{{asset('profile/')}}/{{auth()->user()->image}} "
+                                                         alt="user-image" width="50">
+                                                    @endif
+                                                    <p class="m-0"> {{auth()->user()->name}} </p>
+                                                </a>
                                             </li>
                                             <li role="separator" class="mdc-list-divider m-0"></li>
                                             <li>
@@ -152,7 +159,7 @@
                 </div>
                 <div id="main-toolbar" class="mdc-elevation--z2">
                     <div class="theme-container row between-xs middle-xs h-100">
-                        <a class="logo" href="">
+                        <a class="logo" href="{{url('/')}}">
                             <h1>Real Estate</h1>
                         </a>
                         <div class="horizontal-menu d-none d-md-flex d-lg-flex d-xl-flex">
@@ -194,15 +201,15 @@
                             </div>
                         </div>
 
-                            <div class="row middle-xs">
-                                @can('AdminOrAgent')
+                        <div class="row middle-xs">
+                            @can('AdminOrAgent')
                                 <a href="{{url('properties/create')}}"
                                    class="mdc-button mdc-button--raised d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex">
                                     <span class="mdc-button__ripple"></span>
                                     <span class="mdc-button__label">submit property</span>
                                 </a>
-                                @endcan
-                            </div>
+                            @endcan
+                        </div>
 
                     </div>
                 </div>

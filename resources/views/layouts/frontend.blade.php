@@ -19,27 +19,7 @@
     <link rel="stylesheet" href="{{asset("frontend/css/responsive.css")}}">
 </head>
 <body class="mdc-theme--background">
-<div class="spinner-wrapper" id="preloader">
-    <div class="spinner-container">
-        <div class="spinner-outer">
-            <div class="spinner">
-                <div class="top-left mask">
-                    <div class="plane"></div>
-                </div>
-                <div class="top-right mask">
-                    <div class="plane"></div>
-                </div>
-                <div class="bottom-left mask">
-                    <div class="plane"></div>
-                </div>
-                <div class="bottom-right mask">
-                    <div class="plane"></div>
-                </div>
-            </div>
-            <p class="spinner-text">Real Estate</p>
-        </div>
-    </div>
-</div>
+
 @include('partials.frontend.navbar')
 
 @yield("mainContent")

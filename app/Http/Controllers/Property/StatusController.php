@@ -12,7 +12,7 @@ class StatusController extends Controller
     public function index()
     {
         $statuses = Status::all();
-        return view("backend.property_status", compact('statuses'));
+        return view("backend.admin.property_status", compact('statuses'));
     }
 
     /**
@@ -51,7 +51,7 @@ class StatusController extends Controller
     public function edit(Status $status)
     {
 
-        return view('backend.edit_property_status', compact('status'));
+        return view('backend.admin.edit_property_status', compact('status'));
     }
 
     /**
