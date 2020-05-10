@@ -811,6 +811,20 @@ header.toolbar-2 .horizontal-menu .mdc-button{
 @-ms-keyframes MOVE-BG { from { -ms-transform: translateX(0); } to { -ms-transform: translateX(-7%); } }
 @keyframes MOVE-BG { from { transform: translateX(0); } to { transform: translateX(-7%); } }
 
+.toolbar-1 a.logo {
+    color: black;
+    text-decoration: none !important;
+}
+.toolbar-1.has-bg-image a.logo {
+    color: white;
+    text-decoration: none !important;
+}
+
+.toolbar-1.main-toolbar-fixed a.logo {
+    color: black;
+    text-decoration: none !important;
+}
+
 /**************************************************************/
 /* Top Toolbar
 /**************************************************************/

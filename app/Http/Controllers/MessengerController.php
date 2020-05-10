@@ -44,7 +44,7 @@ class MessengerController extends Controller
         $thread->addParticipant($request->agent_id);
 
 
-        return back()->with(['sendmessage' => 'Your Message Has Been Send.']);
+        return back()->with('sendmessage', 'Your Message Has Been Send.');
     }
 
     public function show($id)
@@ -88,7 +88,6 @@ class MessengerController extends Controller
         } else {
            return redirect()->route('user_messages.show', $id);
         }
-
     }
     public function destroy($id)
     {

@@ -220,33 +220,37 @@
                             @elseif($agent->id != auth()->user()->id)
                                 <div class="widget">
                                     <div class="widget-title bg-primary">Reply to the listing</div>
-                                    <form action="{{route('messages.store')}}" method="post">
-                                        @csrf
-                                        <p>Interested in renting or buying this property? Then send us an email.</p>
-                                        <input class="mdc-text-field__input" name="agent_id" type="hidden"
-                                               value="{{$agent->id}}">
-                                        <input class="mdc-text-field__input" name="subject" type="hidden"
-                                               value="{{$property->title}}">
-                                        <div
-                                            class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea w-100 custom-field my-2 ">
+                                    @if(session('sendmessage'))
+                                        {{session('sendmessage')}}
+                                    @else
+                                        <form action="{{route('messages.store')}}" method="post">
+                                            @csrf
+                                            <p>Interested in renting or buying this property? Then send us an email.</p>
+                                            <input class="mdc-text-field__input" name="agent_id" type="hidden"
+                                                   value="{{$agent->id}}">
+                                            <input class="mdc-text-field__input" name="subject" type="hidden"
+                                                   value="{{$property->title}}">
+                                            <div
+                                                class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea w-100 custom-field my-2 ">
                                         <textarea name="body" class="mdc-text-field__input" rows="5"
                                                   placeholder="Message is required"></textarea>
-                                            <div class="mdc-notched-outline mdc-notched-outline--upgraded">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label for="feedback-message"
-                                                           class="mdc-floating-label">Message</label>
+                                                <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                                    <div class="mdc-notched-outline__leading"></div>
+                                                    <div class="mdc-notched-outline__notch">
+                                                        <label for="feedback-message"
+                                                               class="mdc-floating-label">Message</label>
+                                                    </div>
+                                                    <div class="mdc-notched-outline__trailing"></div>
                                                 </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
                                             </div>
-                                        </div>
-                                        <div class="row around-xs middle-xs p-2 mb-3">
-                                            <button class="mdc-button mdc-button--raised bg-accent" type="submit">
-                                                <span class="mdc-button__ripple"></span>
-                                                <span class="mdc-button__label">Send email</span>
-                                            </button>
-                                        </div>
-                                    </form>
+                                            <div class="row around-xs middle-xs p-2 mb-3">
+                                                <button class="mdc-button mdc-button--raised bg-accent" type="submit">
+                                                    <span class="mdc-button__ripple"></span>
+                                                    <span class="mdc-button__label">Send email</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    @endif
                                 </div>
                             @endif
 

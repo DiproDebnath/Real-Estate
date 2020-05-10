@@ -41,41 +41,50 @@
                             <div class="divider w-100"></div>
                         </div>
                         <h3 class="w-100 text-center py-3">CONTACT US</h3>
-                        <form action="{{route('messages.store')}}" class="contact-form row" method="post">
-                            @csrf
-                            <div class="col-xs-12 col-sm-12  p-2">
-                                <input class="mdc-text-field__input" name="agent_id" type="hidden" value="{{$user->id}}">
-                                <div class="mdc-text-field mdc-text-field--outlined w-100">
-                                    <input class="mdc-text-field__input" name="subject" placeholder="Phone is required">
-                                    <div class="mdc-notched-outline mdc-notched-outline--upgraded">
-                                        <div class="mdc-notched-outline__leading"></div>
-                                        <div class="mdc-notched-outline__notch">
-                                            <label class="mdc-floating-label" style="">Subject</label>
+                        @if(session('sendmessage'))
+                            {{session('sendmessage')}}
+                        @else
+                            <form action="{{route('messages.store')}}" class="contact-form row" method="post">
+                                @csrf
+                                <div class="col-xs-12 col-sm-12  p-2">
+                                    <input class="mdc-text-field__input" name="agent_id" type="hidden"
+                                           value="{{$user->id}}">
+                                    <div class="mdc-text-field mdc-text-field--outlined w-100">
+                                        <input class="mdc-text-field__input" name="subject"
+                                               placeholder="Phone is required">
+                                        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label" style="">Subject</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
                                         </div>
-                                        <div class="mdc-notched-outline__trailing"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 p-2">
-                                <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea w-100">
+                                <div class="col-xs-12 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea w-100">
                                     <textarea class="mdc-text-field__input" rows="5" name="body"
                                               placeholder="Message is required"></textarea>
-                                    <div class="mdc-notched-outline mdc-notched-outline--upgraded">
-                                        <div class="mdc-notched-outline__leading"></div>
-                                        <div class="mdc-notched-outline__notch">
-                                            <label class="mdc-floating-label" style="">Message</label>
+                                        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label" style="">Message</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
                                         </div>
-                                        <div class="mdc-notched-outline__trailing"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 w-100 py-3 text-center">
-                                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded" type="submit">
-                                    <span class="mdc-button__ripple"></span>
-                                    <span class="mdc-button__label">Submit</span>
-                                </button>
-                            </div>
-                        </form>
+                                @can('isAdmin')
+                                    @else
+                                    <div class="col-xs-12 w-100 py-3 text-center">
+                                        <button class="mdc-button mdc-button--raised mdc-ripple-upgraded" type="submit">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Submit</span>
+                                        </button>
+                                    </div>
+                                @endcan
+                            </form>
+                        @endif
                     </div>
 
                 </div>
