@@ -9,8 +9,9 @@
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Real Estate</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" href="{{asset("frontend/fonts/fonts.css")}}">
+
     <link rel="stylesheet" href="{{asset("frontend/css/libs/swiper.min.css")}}">
     <link rel="stylesheet" href="{{asset("frontend/css/libs/material-components-web.min.css")}}">
     @yield('styles')
