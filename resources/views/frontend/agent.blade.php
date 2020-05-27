@@ -43,84 +43,90 @@
 
                         @if(Auth::guest())
                             <div class="col-xs-12 col-md-4 p-3">
-                                <form action="{{route('messages.store')}}" method="post">
+                                <form action="{{route('messages.store')}}" class="contact-form row" method="post">
                                     @csrf
                                     <h3 class="uppercase">Contact Me</h3>
-                                    <input class="mdc-text-field__input" name="agent_id" type="hidden"
-                                           value="{{$agent->id}}">
-                                    <div class="mdc-text-field mdc-text-field--outlined w-100 mt-3">
-                                        <input class="mdc-text-field__input" name="subject" type="text"
-                                        >
-                                        <div class="mdc-notched-outline">
-                                            <div class="mdc-notched-outline__leading"></div>
-                                            <div class="mdc-notched-outline__notch">
-                                                <label for="name" class="mdc-floating-label">Property Name</label>
-                                            </div>
-                                            <div class="mdc-notched-outline__trailing"></div>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea w-100 mt-3">
-                                        <textarea name="body" id="message" class="mdc-text-field__input"
-                                                  rows="5"></textarea>
-                                        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
-                                            <div class="mdc-notched-outline__leading"></div>
-                                            <div class="mdc-notched-outline__notch">
-                                                <label for="message" class="mdc-floating-label">Message</label>
-                                            </div>
-                                            <div class="mdc-notched-outline__trailing"></div>
-                                        </div>
-                                    </div>
-                                    <div class="w-100 text-center mt-4">
-                                        <button type="submit" class="mdc-button mdc-button--raised bg-accent">
-                                            <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Send Email</span>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        @elseif( $agent->id != auth()->user()->id)
-                            <div class="col-xs-12 col-md-4 p-3">
-                                @if(session('sendmessage'))
-                                    {{session('sendmessage')}}
-                                @else
-                                    <form action="{{route('messages.store')}}" method="post">
-                                        @csrf
-                                        <h3 class="uppercase">Contact Me</h3>
+                                    <div class="col-xs-12 col-sm-12  p-2">
                                         <input class="mdc-text-field__input" name="agent_id" type="hidden"
-                                               placeholder="Property Name"
                                                value="{{$agent->id}}">
-
-                                        <div class="mdc-text-field mdc-text-field--outlined w-100 mt-3">
-                                            <input class="mdc-text-field__input" name="subject" type="text"
-                                            >
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label for="name" class="mdc-floating-label"></label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea w-100 mt-3">
-                                        <textarea name="body" id="message" class="mdc-text-field__input"
-                                                  rows="5"></textarea>
+                                        <div class="mdc-text-field mdc-text-field--outlined w-100">
+                                            <input class="mdc-text-field__input" name="subject">
                                             <div class="mdc-notched-outline mdc-notched-outline--upgraded">
                                                 <div class="mdc-notched-outline__leading"></div>
                                                 <div class="mdc-notched-outline__notch">
-                                                    <label for="message" class="mdc-floating-label">Message</label>
+                                                    <label class="mdc-floating-label" style="">Subject</label>
                                                 </div>
                                                 <div class="mdc-notched-outline__trailing"></div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-xs-12 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea w-100">
+                                    <textarea class="mdc-text-field__input" rows="5" name="body"
+                                              placeholder="Message is required"></textarea>
+                                            <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label" style="">Message</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 p-2">
                                         <div class="w-100 text-center mt-4">
                                             <button type="submit" class="mdc-button mdc-button--raised bg-accent">
                                                 <span class="mdc-button__ripple"></span>
                                                 <span class="mdc-button__label">Send Email</span>
                                             </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+
+                        @elseif( $agent->id != auth()->user()->id)
+                            <div class="col-xs-12 col-md-4 p-3">
+                                @if(session('sendmessage'))
+                                    {{session('sendmessage')}}
+                                @else
+                                    <form action="{{route('messages.store')}}" class="contact-form row" method="post">
+                                        @csrf
+                                        <h3 class="uppercase">Contact Me</h3>
+                                        <div class="col-xs-12 col-sm-12  p-2">
+                                            <input class="mdc-text-field__input" name="agent_id" type="hidden"
+                                                   value="{{$agent->id}}">
+                                            <div class="mdc-text-field mdc-text-field--outlined w-100">
+                                                <input class="mdc-text-field__input" name="subject">
+                                                <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                                    <div class="mdc-notched-outline__leading"></div>
+                                                    <div class="mdc-notched-outline__notch">
+                                                        <label class="mdc-floating-label" style="">Subject</label>
+                                                    </div>
+                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 p-2">
+                                            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea w-100">
+                                    <textarea class="mdc-text-field__input" rows="5" name="body"
+                                              placeholder="Message is required"></textarea>
+                                                <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                                    <div class="mdc-notched-outline__leading"></div>
+                                                    <div class="mdc-notched-outline__notch">
+                                                        <label class="mdc-floating-label" style="">Message</label>
+                                                    </div>
+                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 p-2">
+                                            <div class="w-100 text-center mt-4">
+                                                <button type="submit" class="mdc-button mdc-button--raised bg-accent">
+                                                    <span class="mdc-button__ripple"></span>
+                                                    <span class="mdc-button__label">Send Email</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </form>
                                 @endif

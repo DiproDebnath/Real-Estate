@@ -50,8 +50,7 @@
                                     <input class="mdc-text-field__input" name="agent_id" type="hidden"
                                            value="{{$user->id}}">
                                     <div class="mdc-text-field mdc-text-field--outlined w-100">
-                                        <input class="mdc-text-field__input" name="subject"
-                                               placeholder="Phone is required">
+                                        <input class="mdc-text-field__input" name="subject">
                                         <div class="mdc-notched-outline mdc-notched-outline--upgraded">
                                             <div class="mdc-notched-outline__leading"></div>
                                             <div class="mdc-notched-outline__notch">
